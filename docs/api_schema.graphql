@@ -1,0 +1,49 @@
+# load up the GraphQL schema file to Dgraph
+# curl -X POST 192.168.1.150:8080/admin/schema --data-binary '@api_schema.graphql'
+# 
+# drop all scheam
+# curl -X POST 192.168.1.150:8080/alter -d '{"drop_all": true}'
+# -------------------------------------------------------------------------------
+
+# Define the Member type
+type Member @withSubscription {
+  memberId: String! @id @search(by: [exact])              # Unique identifier for the member
+  name: String @search(by: [term, fulltext])              # Name of the member, indexed for search
+  email: String @search(by: [exact])                      # Email address of the member, indexed for exact match
+  orders: [Order] @hasInverse(field: member)              # List of orders placed by the member
+  reviews: [Review] @hasInverse(field: member)            # List of reviews written by the member
+  recommendedProducts: [Product] @hasInverse(field: recommendedToMembers) # List of products recommended to the member
+}
+
+# Define the Product type
+type Product @withSubscription {
+  productId: String! @id @search(by: [exact])             # Unique identifier for the product
+  name: String! @search(by: [term, fulltext])             # Name of the product, indexed for search
+  description: String @search(by: [fulltext])             # Description of the product, indexed for full-text search
+  price: Float!                                           # Price of the product
+  category: String @search(by: [term])                    # Category to which the product belongs, indexed for search
+  reviews: [Review] @hasInverse(field: product)           # List of reviews for the product
+  recommendedToMembers: [Member]                          # List of members to whom the product is recommended
+}
+
+# Define the Order type
+type Order @withSubscription {
+  orderId: String! @id @search(by: [exact])               # Unique identifier for the order
+  member: Member! @hasInverse(field: orders)              # The member who placed the order
+  products: [Product!]!                                   # List of products included in the order
+  total: Float!                                           # Total amount for the order
+  date: DateTime! @search                                 # Date when the order was placed, indexed for search
+}
+
+# Define the Review type
+type Review @withSubscription {
+  reviewId: String! @id @search(by: [exact])              # Unique identifier for the review
+  rating: Int! @search                                    # Rating given in the review, indexed for search
+  comment: String @search(by: [fulltext])                 # Comment provided in the review, indexed for full-text search
+  member: Member! @hasInverse(field: reviews)             # The member who wrote the review
+  product: Product! @hasInverse(field: reviews)           # The product being reviewed
+  date: DateTime! @search                                 # Date when the review was written, indexed for search
+}
+
+
+
