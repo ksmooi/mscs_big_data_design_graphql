@@ -1,10 +1,17 @@
+# Load up the GraphQL schema file to Dgraph
+# curl -X POST 192.168.1.150:8080/admin/schema --data-binary '@api_schema.graphql'
+# 
+# drop all scheam
+# curl -X POST 192.168.1.150:8080/alter -d '{"drop_all": true}'
+# -------------------------------------------------------------------------------
+
+
 # Create and activate a virtual environment
 # ------------------------------------------------------------------
 # python3 -m venv myenv && source myenv/bin/activate
-
-# Upgrade pip and install pydgraph
-# ------------------------------------------------------------------
 # pip install --upgrade pip && pip install requests pydgraph
+# deactivate
+
 
 import uuid
 import json
@@ -25,7 +32,7 @@ class DgraphDataInserter:
     insert_review(review_id, rating, comment, member_id, product_id, date): Inserts a review into the database.
     """
 
-    def __init__(self, graphql_endpoint='http://192.168.1.150:8080/graphql'):
+    def __init__(self, graphql_endpoint='http://localhost:8080/graphql'):
         """
         Initializes the DgraphDataInserter with the GraphQL endpoint.
         

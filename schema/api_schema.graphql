@@ -9,7 +9,7 @@
 type Member @withSubscription {
   memberId: String! @id @search(by: [exact])              # Unique identifier for the member
   name: String @search(by: [term, fulltext])              # Name of the member, indexed for search
-  email: String @search(by: [exact])                      # Email address of the member, indexed for exact match
+  email: String @search(by: [term, exact])                # Email address of the member, indexed for exact match
   orders: [Order] @hasInverse(field: member)              # List of orders placed by the member
   reviews: [Review] @hasInverse(field: member)            # List of reviews written by the member
   recommendedProducts: [Product] @hasInverse(field: recommendedToMembers) # List of products recommended to the member
@@ -31,7 +31,7 @@ type Order @withSubscription {
   orderId: String! @id @search(by: [exact])               # Unique identifier for the order
   member: Member! @hasInverse(field: orders)              # The member who placed the order
   products: [Product!]!                                   # List of products included in the order
-  total: Float!                                           # Total amount for the order
+  total: Float! @search                                   # Total amount for the order, indexed for search
   date: DateTime! @search                                 # Date when the order was placed, indexed for search
 }
 
@@ -44,6 +44,4 @@ type Review @withSubscription {
   product: Product! @hasInverse(field: reviews)           # The product being reviewed
   date: DateTime! @search                                 # Date when the review was written, indexed for search
 }
-
-
 
