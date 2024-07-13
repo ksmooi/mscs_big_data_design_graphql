@@ -31,11 +31,11 @@ This file contains step-by-step instructions for installing and setting up the B
 
 ## Codebase Structure
 
-### [src/backend foder](src/backend)
+### [src/backend folder](src/backend)
 
 **Purpose**: This folder contains the core backend logic of the BeautyInsights 360 project. It includes scripts and modules that handle data analysis, processing, and other backend functionalities. The main script in this folder, `analysis_engine.py`, implements various analysis cases such as customer behavior analysis, product performance evaluation, and sales trend analysis.
 
-### [src/examples foder](src/examples)
+### [src/examples folder](src/examples)
 
 **Purpose**: This folder contains example scripts demonstrating how to interact with the Dgraph API using GraphQL. These scripts serve as practical guides for performing common operations such as queries, mutations, and subscriptions. They also include a script for creating mock data in the Dgraph database. The example scripts help users understand how to use the API and integrate it into their own applications.
 
@@ -44,7 +44,7 @@ This file contains step-by-step instructions for installing and setting up the B
 - `api_subscription.py`: Example script for GraphQL subscriptions.
 - `create_mock_data.py`: Script for creating mock data in Dgraph.
 
-### [src/tests foder](src/tests)
+### [src/tests folder](src/tests)
 
 **Purpose**: This folder contains unit tests for the BeautyInsights 360 project. The tests ensure that the different components of the project are functioning correctly. The main test script, `utest_dgraph_client.py`, includes tests for the `DgraphClient` class, verifying its ability to handle queries, mutations, and subscriptions. Running these tests helps maintain code quality and reliability by catching bugs and issues early in the development process.
 
