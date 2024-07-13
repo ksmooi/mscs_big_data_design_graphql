@@ -335,7 +335,7 @@ Predict future demand for products to inform supply chain and marketing decision
 
 
 
-### Conclusion
+## Conclusion
 
 The BeautyInsights 360 project offers a robust and scalable solution for analyzing customer behavior, product performance, and sales trends within the beauty industry. By leveraging the power of Dgraph's graph database and GraphQL API, the system efficiently manages complex data relationships and provides real-time insights and personalized recommendations. The modular architecture ensures ease of integration and maintenance, while the combination of advanced analytics and machine learning enhances decision-making and strategic planning.
 
