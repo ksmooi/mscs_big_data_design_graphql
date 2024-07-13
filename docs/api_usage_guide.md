@@ -1,4 +1,4 @@
-# Getting Started with GraphQL in Dgraph: Queries, Mutations, and Subscriptions
+# GraphQL API Usage Guide: Queries, Mutations, and Subscriptions
 
 ## Introduction
 

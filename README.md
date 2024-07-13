@@ -8,7 +8,7 @@ BeautyInsights 360 integrates various data sources to analyze customer informati
 
 ## Documentation
 
-### [System Design](docs/system_design.md)
+### [System Architecture for "BeautyInsights 360"](docs/system_design.md)
 
 This file provides a comprehensive overview of the system architecture and design of the BeautyInsights 360 project. It includes detailed diagrams and explanations of the different components and their interactions. This documentation helps users and developers understand the underlying structure of the system and how different modules work together to provide the desired functionality.
 
@@ -21,7 +21,7 @@ This file provides a comprehensive overview of the system architecture and desig
 
 This file provides detailed instructions on how to interact with the API provided by the BeautyInsights 360 project. It covers various aspects of API usage, including available endpoints, query formats, and examples of how to perform common operations such as creating, reading, updating, and deleting data.
 
-### [Dgraph API Generation](docs/dgraph_api_generation.md)
+### [How Dgraph Generates APIs from Schema](docs/dgraph_api_generation.md)
 
 This file explains how to generate the API using Dgraph. It includes information on setting up the GraphQL schema, configuring Dgraph, and generating the necessary API endpoints. It also provides guidance on how to leverage Dgraph’s capabilities to efficiently manage and query graph data.
 
