@@ -543,66 +543,47 @@ mutation {
 
 
 ## GraphQL Subscription Examples
-Sure! Here are examples for each API along with brief introductions and use cases.
 
-### `getMember` API
-**Introduction**: Fetches a single `Member` by `memberId`. Use case: Get detailed information about a specific member.
-
+### Subscribing to All Members (Create, Update, and Delete events)
 ```graphql
-query {
-  getMember(memberId: "1") {
+subscription {
+  queryMember {
     memberId
     name
     email
     orders {
       orderId
-      total
-      date
     }
     reviews {
       reviewId
-      rating
-      comment
-      date
-    }
-    recommendedProducts {
-      productId
-      name
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes (additions, updates, deletions) to `Member` records and retrieves their `memberId`, `name`, `email`, associated `orders`, and `reviews`.
 
-### `queryMember` API
-**Introduction**: Fetches a list of `Member` objects with optional filters, ordering, and pagination. Use case: Get a list of members with specific criteria.
-
+### Subscribing to a Specific Member (Create, Update, and Delete events)
 ```graphql
-query {
-  queryMember(filter: { name: { anyofterms: "Alice" } }, first: 5, offset: 0) {
+subscription($memberId: String!) {
+  getMember(memberId: $memberId) {
     memberId
     name
     email
+    orders {
+      orderId
+    }
+    reviews {
+      reviewId
+    }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes to a specific `Member` identified by `memberId` and retrieves their `memberId`, `name`, `email`, associated `orders`, and `reviews`.
 
-### `aggregateMember` API
-**Introduction**: Aggregates `Member` objects based on a filter. Use case: Get aggregate statistics about members, such as count or average.
-
+### Subscribing to All Products (Create, Update, and Delete events)
 ```graphql
-query {
-  aggregateMember(filter: { name: { anyofterms: "Alice" } }) {
-    count
-  }
-}
-```
-
-### `getProduct` API
-**Introduction**: Fetches a single `Product` by `productId`. Use case: Get detailed information about a specific product.
-
-```graphql
-query {
-  getProduct(productId: "1") {
+subscription {
+  queryProduct {
     productId
     name
     description
@@ -610,143 +591,103 @@ query {
     category
     reviews {
       reviewId
-      rating
-      comment
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes (additions, updates, deletions) to `Product` records and retrieves their `productId`, `name`, `description`, `price`, `category`, and associated `reviews`.
 
-### `queryProduct` API
-**Introduction**: Fetches a list of `Product` objects with optional filters, ordering, and pagination. Use case: Get a list of products with specific criteria.
-
+### Subscribing to a Specific Product (Create, Update, and Delete events)
 ```graphql
-query {
-  queryProduct(filter: { category: { anyofterms: "Beauty" } }, first: 5, offset: 0) {
+subscription($productId: String!) {
+  getProduct(productId: $productId) {
     productId
     name
     description
     price
     category
-  }
-}
-```
-
-### `aggregateProduct` API
-**Introduction**: Aggregates `Product` objects based on a filter. Use case: Get aggregate statistics about products, such as count or average price.
-
-```graphql
-query {
-  aggregateProduct(filter: { category: { anyofterms: "Beauty" } }) {
-    count
-    avg {
-      price
+    reviews {
+      reviewId
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes to a specific `Product` identified by `productId` and retrieves their `productId`, `name`, `description`, `price`, `category`, and associated `reviews`.
 
-### `getOrder` API
-**Introduction**: Fetches a single `Order` by `orderId`. Use case: Get detailed information about a specific order.
-
+### Subscribing to All Orders (Create, Update, and Delete events)
 ```graphql
-query {
-  getOrder(orderId: "1") {
+subscription {
+  queryOrder {
     orderId
     total
     date
     member {
       memberId
-      name
-      email
     }
     products {
       productId
-      name
-      price
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes (additions, updates, deletions) to `Order` records and retrieves their `orderId`, `total`, `date`, associated `member`, and `products`.
 
-### `queryOrder` API
-**Introduction**: Fetches a list of `Order` objects with optional filters, ordering, and pagination. Use case: Get a list of orders with specific criteria.
-
+### Subscribing to a Specific Order (Create, Update, and Delete events)
 ```graphql
-query {
-  queryOrder(filter: { total: { ge: 20.00 } }, first: 5, offset: 0) {
+subscription($orderId: String!) {
+  getOrder(orderId: $orderId) {
     orderId
     total
     date
-  }
-}
-```
-
-### `aggregateOrder` API
-**Introduction**: Aggregates `Order` objects based on a filter. Use case: Get aggregate statistics about orders, such as count or average total.
-
-```graphql
-query {
-  aggregateOrder(filter: { total: { ge: 20.00 } }) {
-    count
-    avg {
-      total
+    member {
+      memberId
+    }
+    products {
+      productId
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes to a specific `Order` identified by `orderId` and retrieves their `orderId`, `total`, `date`, associated `member`, and `products`.
 
-### `getReview` API
-**Introduction**: Fetches a single `Review` by `reviewId`. Use case: Get detailed information about a specific review.
-
+### Subscribing to All Reviews (Create, Update, and Delete events)
 ```graphql
-query {
-  getReview(reviewId: "1") {
+subscription {
+  queryReview {
     reviewId
     rating
     comment
     date
     member {
       memberId
-      name
-      email
     }
     product {
       productId
-      name
-      price
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes (additions, updates, deletions) to `Review` records and retrieves their `reviewId`, `rating`, `comment`, `date`, associated `member`, and `product`.
 
-### `queryReview` API
-**Introduction**: Fetches a list of `Review` objects with optional filters, ordering, and pagination. Use case: Get a list of reviews with specific criteria.
-
+### Subscribing to a Specific Review (Create, Update, and Delete events)
 ```graphql
-query {
-  queryReview(filter: { rating: { eq: 5 } }, first: 5, offset: 0) {
+subscription($reviewId: String!) {
+  getReview(reviewId: $reviewId) {
     reviewId
     rating
     comment
     date
-  }
-}
-```
-
-### `aggregateReview` API
-**Introduction**: Aggregates `Review` objects based on a filter. Use case: Get aggregate statistics about reviews, such as count or average rating.
-
-```graphql
-query {
-  aggregateReview(filter: { rating: { eq: 5 } }) {
-    count
-    avg {
-      rating
+    member {
+      memberId
+    }
+    product {
+      productId
     }
   }
 }
 ```
+**Explanation:** This subscription listens for any changes to a specific `Review` identified by `reviewId` and retrieves their `reviewId`, `rating`, `comment`, `date`, associated `member`, and `product`.
+
 
 
 ## Conclusion

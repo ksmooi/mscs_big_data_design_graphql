@@ -183,16 +183,18 @@ mutation {
 }
 ```
 
+
 ## Subscription API Generation
 
 ### Overview
-Subscription APIs in Dgraph enable real-time updates by allowing clients to subscribe to changes in the database. For each type with the `@withSubscription` directive, Dgraph generates subscription operations for create, update, and delete events.
+Subscription APIs in Dgraph enable real-time updates by allowing clients to subscribe to changes in the database. For each type with the `@withSubscription` directive, Dgraph generates subscription operations for **create, update, and delete events**.
 
 ### How it Works
 For each type defined with the `@withSubscription` directive in your schema, Dgraph provides several subscription operations:
-- **Created Records Subscriptions**: Listen for new records using `new<Type>` subscriptions.
-- **Updated Records Subscriptions**: Listen for updates to existing records using `updated<Type>` subscriptions.
-- **Deleted Records Subscriptions**: Listen for deletions of records using `deleted<Type>` subscriptions.
+- **Created Records Subscriptions**: Listen for new records using `query<Type>` subscriptions.
+- **Updated Records Subscriptions**: Listen for updates to existing records using `query<Type>` subscriptions.
+- **Deleted Records Subscriptions**: Listen for deletions of records using `query<Type>` subscriptions.
+- **Single Record Subscriptions**: Listen for changes to a specific record using `get<Type>` subscriptions.
 
 **Example Schema**:
 ```graphql
@@ -213,10 +215,10 @@ type Product @withSubscription {
 
 ### More Examples
 
-**Subscription for New Members**:
+**Subscription for All Members**:
 ```graphql
 subscription {
-  newMember {
+  queryMember {
     memberId
     name
     email
@@ -224,22 +226,66 @@ subscription {
 }
 ```
 
-**Subscription for Updated Members**:
+**Subscription for All Products**:
 ```graphql
 subscription {
-  updatedMember {
-    memberId
+  queryProduct {
+    productId
     name
-    email
+    description
+    price
+    category
   }
 }
 ```
 
-**Subscription for Deleted Members**:
+**Subscription for All Orders**:
 ```graphql
 subscription {
-  deletedMember {
+  queryOrder {
+    orderId
+    total
+    date
+    member {
+      memberId
+    }
+    products {
+      productId
+    }
+  }
+}
+```
+
+**Subscription for Specific Member**:
+```graphql
+subscription($memberId: String!) {
+  getMember(memberId: $memberId) {
     memberId
+    name
+    email
+    orders {
+      orderId
+    }
+    reviews {
+      reviewId
+    }
+  }
+}
+```
+
+**Subscription for Specific Order**:
+```graphql
+subscription($orderId: String!) {
+  getOrder(orderId: $orderId) {
+    orderId
+    total
+    date
+    member {
+      memberId
+    }
+    products {
+      productId
+    }
   }
 }
 ```
